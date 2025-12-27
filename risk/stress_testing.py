@@ -4,64 +4,53 @@ from scipy.stats import norm
 
 # -------------------------------------------------
 # STRESS TESTING & SCENARIO ANALYSIS
+# SINGLE ASSET — GARCH BASED
 # -------------------------------------------------
 
-def run_stress_tests(
-    returns_df,
-    garch_result,
-    stock="INFY.NS",
-    stress_multiplier=3
+def run_stress_testing(
+    returns,
+    garch_vol,
+    confidence_level=0.99,
+    stress_multiplier=3,
+    horizon_days=5
 ):
     """
-    Stress testing based on:
-    1. Worst historical day
+    Stress testing using:
+    1. Worst historical loss
     2. GARCH volatility shock
     3. Multi-day crisis scenario
 
-    Logic EXACTLY SAME as Code 14.
+    Logic EXACTLY SAME as Code 14
     """
 
     # -----------------------------------
-    # Prepare returns
+    # 1️⃣ Worst historical day
     # -----------------------------------
-    returns = returns_df.loc[
-        returns_df["Ticker"] == stock,
-        "log_return"
-    ].values
+    worst_daily_loss = abs(np.min(returns))
 
     # -----------------------------------
-    # 1️⃣ HISTORICAL STRESS TEST
+    # 2️⃣ GARCH volatility shock
     # -----------------------------------
-    worst_daily_loss = abs(returns.min())
-
-    # -----------------------------------
-    # 2️⃣ GARCH VOLATILITY SHOCK
-    # -----------------------------------
-    garch_vol = pd.Series(garch_result.conditional_volatility)
     latest_vol = garch_vol.iloc[-1]
+    z_score = norm.ppf(1 - confidence_level)
 
-    z_99 = norm.ppf(0.01)
-
-    garch_stress_loss = abs(
-        z_99 * latest_vol * stress_multiplier
-    )
+    garch_stress_loss = abs(z_score * latest_vol * stress_multiplier)
 
     # -----------------------------------
-    # 3️⃣ MULTI-DAY CRISIS (5-Day)
+    # 3️⃣ Multi-day crisis scenario
     # -----------------------------------
-    days = 5
     multi_day_stress_loss = abs(
-        np.sqrt(days) * garch_stress_loss
+        np.sqrt(horizon_days) * garch_stress_loss
     )
 
     # -----------------------------------
-    # Summary Table
+    # Summary table
     # -----------------------------------
     stress_summary = pd.DataFrame({
         "Scenario": [
             "Worst Historical Day",
             "GARCH Volatility Shock (1-Day)",
-            "GARCH Volatility Shock (5-Day)"
+            f"GARCH Volatility Shock ({horizon_days}-Day)"
         ],
         "Estimated Loss": [
             worst_daily_loss,
@@ -70,10 +59,4 @@ def run_stress_tests(
         ]
     })
 
-    return {
-        "Worst_Daily_Loss": worst_daily_loss,
-        "GARCH_Stress_1D": garch_stress_loss,
-        "GARCH_Stress_5D": multi_day_stress_loss,
-        "Stress_Summary": stress_summary
-    }
-
+    return stress_summary
