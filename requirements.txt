@@ -1,10 +1,16 @@
-numpy==1.26.4
-pandas==2.2.2
-matplotlib==3.8.4
-scipy==1.11.4
-statsmodels==0.14.2
-arch==6.3.0
-yfinance==0.2.43
-tqdm==4.66.4
-pyarrow==16.1.0
+# Core scientific stack
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+matplotlib>=3.7
 
+# Time-series & econometrics
+statsmodels>=0.14
+arch>=6.3
+
+# Data handling & utilities
+tqdm>=4.65
+pyarrow>=12.0
+
+# Market data (used in scripts)
+yfinance>=0.2
