@@ -78,6 +78,7 @@ def plot_walkforward_equity(df):
     (NO look-ahead, cumulative performance)
     """
     import matplotlib.pyplot as plt
+    plt.style.use("default")
 
     equity = (1 + df["Strategy_Return"]).cumprod()
 
