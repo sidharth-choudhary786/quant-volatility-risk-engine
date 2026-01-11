@@ -1,5 +1,5 @@
 # Quant Volatility & Risk Engine  
-*A complete, reproducible quantitative research system for volatility modeling, regime-aware strategies, and portfolio risk control*
+*A research-grade quantitative system built to study volatility, regime behavior, and portfolio risk under realistic market constraints*
 
 ---
 ## Quick Start
@@ -18,6 +18,76 @@ run entire project
 python -m run.run_full_pipeline
 ```
 
+## Research Context
+
+This project was built as a response to a common gap in quantitative finance projects:
+many systems demonstrate performance, but very few demonstrate **research discipline**.
+
+The goal here is not to optimize metrics, but to design a system that:
+- behaves correctly out-of-sample
+- remains interpretable across regimes
+- exposes failure modes instead of hiding them
+
+This context informs every design decision in the pipeline.
+
+
+## Who This Project Is For
+
+- MSc / MTech / PhD students working on quantitative finance projects  
+- Candidates preparing for quant research or trading interviews  
+- Researchers interested in volatility modeling and regime-aware systems  
+- Engineers and students interested in how professional quantitative research pipelines are structured
+
+
+## Why This Project Matters
+
+Most trading and quant projects focus on maximizing returns using static backtests.
+This project focuses on **building a realistic research system** that survives
+out-of-sample testing, regime changes, and market stress.
+
+The emphasis is on:
+- correctness over curve-fitting  
+- robustness over short-term performance  
+- transparency over black-box optimization  
+
+This reflects how real quantitative research is conducted in industry.
+
+
+## What Makes This Project Different
+
+- Fully automated end-to-end pipeline (one command)
+- Rolling walk-forward evaluation (no look-ahead bias)
+- Explicit regime-aware logic (not hidden ML)
+- Portfolio-level risk controls (VaR, ES, stress tests)
+- Diagnostics-first mindset (failure analysis, not just returns)
+
+## How This Project Should Be Read
+
+This repository is not meant to be skimmed like a typical trading strategy.
+
+It is structured to show **how decisions are made**, not just what the final metrics are.
+
+If you are reviewing this as:
+- a researcher → focus on walk-forward logic and diagnostics
+- an interviewer → focus on design decisions and failure analysis
+- an engineer → focus on modularity and reproducibility
+
+The results matter, but the **thinking behind the results matters more**.
+
+
+## Key Design Decisions
+
+Some deliberate choices shaped this system:
+
+- Walk-forward evaluation is used instead of static splits to reflect how models are deployed in practice.
+- Regime logic is rule-based and observable, avoiding opaque decision boundaries.
+- Risk controls operate at the portfolio level, not as post-processing filters.
+- Diagnostics are treated as first-class outputs, not optional analysis.
+
+These decisions trade raw performance for interpretability and robustness.
+
+
+
 ## 1. What this project is about (in simple words)
 The entire research pipeline is fully automated and reproducible.
 
@@ -29,42 +99,36 @@ Instead of focusing on “high returns”, the goal is to build a system that is
 - transparent and diagnosable  
 ---
 
+
 ## 2. Key ideas implemented
 
-The project implements the following ideas end-to-end:
-
 ### Volatility modeling
-- GARCH
-- GJR-GARCH
-- EGARCH
-- FIGARCH
+- GARCH, GJR-GARCH, EGARCH, FIGARCH
 
 ### Research discipline
-- Rolling **walk-forward re-fitting**
-- Dynamic model selection
-- No data leakage
-- Strict train → test separation
+- Rolling walk-forward re-fitting  
+- Dynamic model selection  
+- Strict train → test separation  
+- No data leakage  
 
 ### Strategy logic
-- Volatility targeting
-- Volatility regime detection (LOW / MEDIUM / HIGH)
-- Risk-adjusted signal:  
-  **Expected Return ÷ Forecasted Volatility**
+- Volatility targeting  
+- Volatility regime detection (LOW / MEDIUM / HIGH)  
+- Risk-adjusted signal: Expected Return ÷ Forecasted Volatility  
 
 ### Portfolio & risk
-- Inverse-volatility weighted portfolios
-- Regime-aware portfolio allocation
-- Portfolio-level **VaR & Expected Shortfall constraints**
-- Stress testing (COVID-19, rate-hike regimes)
-- Capital allocation checks
+- Inverse-volatility weighted portfolios  
+- Regime-aware portfolio allocation  
+- Portfolio-level VaR & Expected Shortfall constraints  
+- Stress testing (COVID-19, rate-hike regimes)  
+- Capital allocation checks  
 
-### Diagnostics (what most projects miss)
-- Regime-wise performance attribution
-- Risk allocator behavior analysis
-- Crisis-specific drawdown analysis
-- Visual equity curves for interpretation
+### Diagnostics
+- Regime-wise performance attribution  
+- Risk allocator behavior analysis  
+- Crisis-specific drawdown analysis  
+- Visual equity curves for interpretation  
 
----
 
 ## 3. Project structure (clean & modular)
 
@@ -187,35 +251,26 @@ Location: `outputs/charts/`
 - crisis-period equity curves (COVID-19, rate hikes)
 
 
-## 7. Diagnostics philosophy (why this matters)
+## 7. Diagnostics philosophy
 
-Most projects stop at Sharpe ratios.
+Most quantitative projects stop at reporting Sharpe ratios.
 
-This project answers deeper questions:
+This project focuses on understanding *behavior* rather than optimizing metrics.
+Diagnostics are used to answer practical research questions:
 
-- When does the strategy fail?
-- Which regimes contribute most to drawdowns?
-- Does risk control actually activate?
-- How does the system behave in real crises?
+- When does the strategy underperform?
+- Which volatility regimes contribute most to drawdowns?
+- Does the risk allocator actually activate, and when?
+- How does the system behave during real market crises?
 
-These diagnostics align with standard practices used in professional quantitative research.
-
-
-## How to Interpret the Results
-
-- Walk-forward equity confirms the absence of look-ahead bias.
-- Regime-aware portfolio sacrifices some return to reduce tail risk.
-- Risk allocator remains inactive in normal conditions and activates only during stress.
-- Crisis plots demonstrate realistic drawdowns rather than artificial smooth curves.
-
-These behaviors are expected and desired in institutional-grade systems.
+These diagnostics follow standard practices used in professional quantitative research.
 
 ---
 
 ## 8. How Good Are the Results? (Honest Assessment)
 
-The results are reasonable and internally consistent rather than
-exceptional. Performance naturally decreases as evaluation constraints become stricter, which is consistent with robust out-of-sample testing.
+The results are reasonable and internally consistent rather than aggressively optimized for in-sample performance.
+Performance naturally decreases as evaluation constraints become stricter, which is consistent with robust out-of-sample testing.
 
 At the portfolio level, adding regime awareness improves overall
 risk-adjusted behavior, mainly by reducing drawdowns during high
@@ -243,13 +298,15 @@ It is **far above**:
 
 ## 10. Disclaimer
 
-This project is strictly for **research and educational purposes**.  
-It is not financial advice and not a live trading system.
+This project reflects my approach to quantitative research:
+explicit assumptions, controlled experimentation, and honest evaluation under uncertainty.
 
 ---
 
 ## 11. Author
 
-Designed and implemented independently as a full quantitative research system,
-with emphasis on statistical rigor, realistic assumptions,
-and professional research practices.
+Designed and implemented end-to-end as a personal quantitative research system.
+This project reflects how I approach quantitative problems:
+define assumptions clearly, test them under realistic constraints,
+and evaluate results with transparency rather than optimism.
+
