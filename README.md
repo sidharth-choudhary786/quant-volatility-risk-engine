@@ -1,22 +1,35 @@
 # Quant Volatility & Risk Engine  
-*A research-grade quantitative system built to study volatility, regime behavior, and portfolio risk under realistic market constraints*
 
----
+**Tech Stack:** Python 3.11  
+**Domain:** Quantitative Finance  
+**Status:** Research Complete  
+
+🔗 Python: https://www.python.org  
+🔗 Project Repo: https://github.com/sidharth-choudhary786/quant-volatility-risk-engine
+
+
 ## Quick Start
 
-create environment
+### Create virtual environment
 ```bash
-/opt/homebrew/bin/python3.11 -m venv venv
-source venv/bin/activate
+python3.11 -m venv venv
+
+# macOS / Linux
+source venv/bin/activate   
+
+# Windows
+venv\Scripts\activate
 ```
-install dependencies
+### Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
-run entire project
+### Run entire project
 ```bash
 python -m run.run_full_pipeline
 ```
+> The entire pipeline executes end-to-end with no manual intervention.
+
 
 ## Research Context
 
@@ -41,16 +54,11 @@ This context informs every design decision in the pipeline.
 
 ## Why This Project Matters
 
-Most trading and quant projects focus on maximizing returns using static backtests.
-This project focuses on **building a realistic research system** that survives
-out-of-sample testing, regime changes, and market stress.
+This project prioritizes:
+- robustness over curve-fitting
+- interpretability over opaque optimization
+- failure analysis over headline metrics
 
-The emphasis is on:
-- correctness over curve-fitting  
-- robustness over short-term performance  
-- transparency over black-box optimization  
-
-This reflects how real quantitative research is conducted in industry.
 
 
 ## What Makes This Project Different
@@ -60,6 +68,7 @@ This reflects how real quantitative research is conducted in industry.
 - Explicit regime-aware logic (not hidden ML)
 - Portfolio-level risk controls (VaR, ES, stress tests)
 - Diagnostics-first mindset (failure analysis, not just returns)
+
 
 ## How This Project Should Be Read
 
@@ -87,8 +96,9 @@ Some deliberate choices shaped this system:
 These decisions trade raw performance for interpretability and robustness.
 
 
+## Technical Overview
 
-## 1. What this project is about (in simple words)
+### 1. What this project is about (in simple words)
 The entire research pipeline is fully automated and reproducible.
 
 Instead of focusing on “high returns”, the goal is to build a system that is:
@@ -97,40 +107,40 @@ Instead of focusing on “high returns”, the goal is to build a system that is
 - free from look-ahead bias  
 - robust across market regimes  
 - transparent and diagnosable  
----
 
 
-## 2. Key ideas implemented
 
-### Volatility modeling
+### 2. Key ideas implemented
+
+#### Volatility modeling
 - GARCH, GJR-GARCH, EGARCH, FIGARCH
 
-### Research discipline
+#### Research discipline
 - Rolling walk-forward re-fitting  
 - Dynamic model selection  
 - Strict train → test separation  
 - No data leakage  
 
-### Strategy logic
+#### Strategy logic
 - Volatility targeting  
 - Volatility regime detection (LOW / MEDIUM / HIGH)  
 - Risk-adjusted signal: Expected Return ÷ Forecasted Volatility  
 
-### Portfolio & risk
+#### Portfolio & risk
 - Inverse-volatility weighted portfolios  
 - Regime-aware portfolio allocation  
 - Portfolio-level VaR & Expected Shortfall constraints  
 - Stress testing (COVID-19, rate-hike regimes)  
 - Capital allocation checks  
 
-### Diagnostics
+#### Diagnostics
 - Regime-wise performance attribution  
 - Risk allocator behavior analysis  
 - Crisis-specific drawdown analysis  
 - Visual equity curves for interpretation  
 
 
-## 3. Project structure (clean & modular)
+### 3. Project structure (clean & modular)
 
 ```
 quant-volatility-risk-engine/
@@ -155,9 +165,11 @@ quant-volatility-risk-engine/
 
 ---
 
-## 4. Environment setup (clean & reproducible)
+### 4. Environment setup (macOS example)
+This section shows a macOS/Homebrew setup.  
+Other platforms can use any Python 3.11 installation.
 
-### Step 1: Install Python (macOS / Linux)
+#### Step 1: Install Python (macOS / Linux)
 
 ```bash
 brew install python@3.11
@@ -169,9 +181,8 @@ Expected:
 Python 3.11.x
 ```
 
----
 
-### Step 2: Create virtual environment
+#### Step 2: Create virtual environment
 
 ```bash
 /opt/homebrew/bin/python3.11 -m venv venv
@@ -181,9 +192,8 @@ source venv/bin/activate
 > Always use a fresh virtual environment.
 
 
----
 
-### Step 3: Install dependencies
+#### Step 3: Install dependencies
 
 ```bash
 pip install --upgrade pip
@@ -192,7 +202,7 @@ pip install -r requirements.txt
 
 ---
 
-## 5. One-command execution (FULL PIPELINE)
+### 5. One-command execution (FULL PIPELINE)
 
 Once setup is done, **everything runs with one command**:
 
@@ -216,12 +226,12 @@ This single command executes:
 No manual steps. No hidden scripts.
 
 ---
-## 6. Outputs & Artifacts
+### 6. Outputs & Artifacts
 
 All outputs are saved under the `outputs/` directory and represent final
 research results produced by the pipeline.
 
-### 6.1 Research Tables (CSV)
+#### 6.1 Research Tables (CSV)
 
 Location: `outputs/final/`
 
@@ -240,7 +250,7 @@ Examples:
 - portfolio_regime_metrics.csv
 - portfolio_comparison.csv
 
-### 6.2 Visual Diagnostics (Plots)
+#### 6.2 Visual Diagnostics (Plots)
 
 Location: `outputs/charts/`
 
@@ -251,7 +261,7 @@ Location: `outputs/charts/`
 - crisis-period equity curves (COVID-19, rate hikes)
 
 
-## 7. Diagnostics philosophy
+### 7. Diagnostics philosophy
 
 Most quantitative projects stop at reporting Sharpe ratios.
 
@@ -267,7 +277,7 @@ These diagnostics follow standard practices used in professional quantitative re
 
 ---
 
-## 8. How Good Are the Results? (Honest Assessment)
+### 8. How Good Are the Results? (Honest Assessment)
 
 The results are reasonable and internally consistent rather than aggressively optimized for in-sample performance.
 Performance naturally decreases as evaluation constraints become stricter, which is consistent with robust out-of-sample testing.
@@ -281,9 +291,9 @@ Overall, the outcomes are believable and reflect realistic performance
 for volatility- and regime-based strategies.
 
 
-## 9. Academic & industry level
+### 9. Academic & industry level
 
-This project comfortably sits at:
+This project aligns with expectations for:
 
 - **Strong MSc / MTech final project**
 - **Early PhD-level research prototype**
@@ -294,19 +304,27 @@ It is **far above**:
 - Static backtests  
 - ML-for-the-sake-of-ML projects  
 
----
+### 10. Skills Demonstrated
 
-## 10. Disclaimer
+- Time-series modeling and volatility forecasting
+- Walk-forward experimental design
+- Portfolio-level risk measurement (VaR, ES)
+- Diagnostic-driven research evaluation
+- Reproducible research pipelines
+
+
+### 11. Disclaimer
 
 This project reflects my approach to quantitative research:
 explicit assumptions, controlled experimentation, and honest evaluation under uncertainty.
 
----
 
-## 11. Author
+### 12. Author
 
 Designed and implemented end-to-end as a personal quantitative research system.
-This project reflects how I approach quantitative problems:
-define assumptions clearly, test them under realistic constraints,
-and evaluate results with transparency rather than optimism.
+
+**Connect with me:**
+- GitHub: https://github.com/sidharth-choudhary786
+- LinkedIn: https://www.linkedin.com/in/sidharth-choudhary786
+- Projects: https://github.com/sidharth-choudhary786?tab=repositories
 
