@@ -33,11 +33,12 @@ python -m run.run_full_pipeline
 
 ## Research Context
 
-This project grew out of repeatedly seeing the same issue in many
-quantitative finance projects: impressive numbers, but very little
+This project grew out of a frustration I kept running into while reviewing
+quantitative finance projects: impressive headline numbers, but very little
 attention to research discipline, robustness, or failure analysis.
 
-The goal here is not to optimize metrics, but to design a system that:
+The goal here is not to optimize metrics or chase Sharpe ratios, but to
+design a system that:
 - behaves correctly out-of-sample
 - remains interpretable across regimes
 - exposes failure modes instead of hiding them
@@ -67,10 +68,13 @@ This gives a complete picture in under 10 minutes.
 
 ## Why This Project Matters
 
-This project prioritizes:
+This project intentionally prioritizes:
 - robustness over curve-fitting
 - interpretability over opaque optimization
 - failure analysis over headline metrics
+
+These priorities come with trade-offs, and the results reflect that.
+
 
 
 
@@ -94,7 +98,8 @@ If you are reviewing this as:
 - an interviewer → focus on design decisions and failure analysis
 - an engineer → focus on modularity and reproducibility
 
-The results matter, but the **thinking behind the results matters more**.
+The results matter, but understanding *why they look the way they do*
+matters more.
 
 
 ## Key Design Decisions
@@ -301,7 +306,7 @@ summarize the behavior of the system visually:
 
 ### 7. Diagnostics philosophy
 
-Most quantitative projects stop at reporting Sharpe ratios.
+Many quantitative projects stop at reporting Sharpe ratios and moving on.
 
 This project focuses on understanding *behavior* rather than optimizing metrics.
 Diagnostics are used to answer practical research questions:
@@ -353,8 +358,9 @@ It is **far above**:
 
 ### 11. Disclaimer
 
-This project reflects my approach to quantitative research:
-explicit assumptions, controlled experimentation, and honest evaluation under uncertainty.
+This project documents how I think about quantitative systems under uncertainty:
+explicit assumptions, controlled experimentation, and honest evaluation when
+results are uncomfortable.
 
 
 ### 12. Author
