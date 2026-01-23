@@ -20,6 +20,8 @@ def apply_risk_allocator(
     )
 
     scale, var, es = risk_constrained_scaler(clean_returns)
+    # Explicit confidence level for risk metrics
+    ALPHA = 0.99  # 99% confidence (industry standard)
 
     portfolio_df = portfolio_df.copy()
 
@@ -35,10 +37,12 @@ def apply_risk_allocator(
     ).cumprod()
 
     return portfolio_df, {
-        "Portfolio_VaR": var,
-        "Portfolio_ES": es,
-        "Risk_Scale": scale
+        f"Portfolio_VaR_{int(ALPHA*100)}": var,
+        f"Portfolio_ES_{int(ALPHA*100)}": es,
+        "Risk_Scale": scale,
+        "Allocator_Active": scale < 1.0
     }
+
 if __name__ == "__main__":
     import numpy as np
     import pandas as pd
