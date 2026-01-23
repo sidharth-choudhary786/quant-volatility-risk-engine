@@ -2,29 +2,31 @@ import numpy as np
 import pandas as pd
 
 def volatility_target_position(
-    forecasted_volatility,
-    target_vol=0.01,
-    min_pos=0.0,
-    max_pos=1.0
+    forecasted_volatility: pd.Series,
+    target_vol: float = 0.01,
+    min_pos: float = 0.0,
+    max_pos: float = 1.0
 ):
     """
-    Volatility targeting position sizing (REALISTIC, NO LEVERAGE)
+    Volatility targeting position sizing (NO LEVERAGE, REALISTIC)
 
     Formula:
-        Position Size = target_vol / forecasted_volatility
+        Position_Size = target_vol / forecasted_volatility
 
     Constraints:
-        0 <= Position_Size <= 1.0  (NO leverage)
+        min_pos <= Position_Size <= max_pos
 
-    This ensures:
+    This guarantees:
     - No hidden leverage
     - Institutional realism
-    - Clean risk interpretation
+    - Stable risk interpretation
     """
+
+    print("🔥 USING FIXED POSITION SIZING FUNCTION 🔥")
 
     position_size = target_vol / forecasted_volatility
 
-    # HARD leverage cap (CRITICAL FIX)
+    # HARD leverage cap (FINAL SAFETY)
     position_size = np.clip(position_size, min_pos, max_pos)
 
     return pd.Series(
