@@ -1,6 +1,7 @@
 def allocator_stats(risk_summary_df):
     """
     Diagnostics for risk allocator behavior
+    (type-safe, confidence-level agnostic)
     """
 
     # Convert key-value CSV → dictionary
@@ -8,13 +9,18 @@ def allocator_stats(risk_summary_df):
         zip(risk_summary_df["Metric"], risk_summary_df["Value"])
     )
 
-    scale = summary["Risk_Scale"]
-    var = summary["Portfolio_VaR"]
-    es = summary["Portfolio_ES"]
+    # ---- Robust key detection ----
+    var_key = next(k for k in summary if k.startswith("Portfolio_VaR"))
+    es_key  = next(k for k in summary if k.startswith("Portfolio_ES"))
+
+    # ---- TYPE FIX (CRITICAL) ----
+    scale = float(summary["Risk_Scale"])
+    var = float(summary[var_key])
+    es = float(summary[es_key])
 
     return {
         "Risk_Scale": scale,
-        "Portfolio_VaR": var,
-        "Portfolio_ES": es,
+        var_key: var,
+        es_key: es,
         "Allocator_Active": scale < 1.0
     }
