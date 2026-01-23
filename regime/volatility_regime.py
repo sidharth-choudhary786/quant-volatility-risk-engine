@@ -15,7 +15,7 @@ def detect_volatility_regime(vol_series, window=60):
 
     for v, l, h in zip(vol, low_q, high_q):
         if pd.isna(l) or pd.isna(h):
-            regimes.append("UNKNOWN")
+            regimes.append("MEDIUM")  # FIX: no UNKNOWN
         elif v < l:
             regimes.append("LOW")
         elif v < h:
@@ -23,4 +23,4 @@ def detect_volatility_regime(vol_series, window=60):
         else:
             regimes.append("HIGH")
 
-    return pd.Series(regimes)
+    return pd.Series(regimes, index=vol.index, name="Vol_Regime")
