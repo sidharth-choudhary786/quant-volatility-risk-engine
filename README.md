@@ -10,7 +10,7 @@
 
 ## Quick Start
 
-### Create virtual environment
+### Create and activate a virtual environment
 ```bash
 python3.11 -m venv venv
 
@@ -31,30 +31,33 @@ python -m run.run_full_pipeline
 > The entire pipeline executes end-to-end with no manual intervention.
 
 
-## Research Context
+## Why I Built This Project
 
-This project grew out of a frustration I kept running into while reviewing
-quantitative finance projects: impressive headline numbers, but very little
-attention to research discipline, robustness, or failure analysis.
+I started this project after going through several quantitative finance
+projects that looked impressive on paper but quietly relied on hindsight.
+Once you removed look-ahead or added basic realism, many of those results
+fell apart.
 
-The goal here is not to optimize metrics or chase Sharpe ratios, but to
-design a system that:
-- behaves correctly out-of-sample
-- remains interpretable across regimes
-- exposes failure modes instead of hiding them
+Instead of chasing Sharpe ratios, I wanted to see how a strategy behaves
+when conditions change — especially during volatility spikes. That meant
+accepting weaker headline numbers in exchange for clarity, reproducibility,
+and visible failure modes.
 
-This context informs every design decision in the pipeline.
+I don’t see this codebase as a “strategy to trade”. I see it as a research
+sandbox — something I can stress, break, and inspect when market behavior
+changes.
 
 
 ## Who This Project Is For
 
-- MSc / MTech / PhD students working on quantitative finance projects  
-- Candidates preparing for quant research or trading interviews  
-- Researchers interested in volatility modeling and regime-aware systems  
-- Engineers and students interested in how professional quantitative research pipelines are structured
+This project is useful for students and early-career researchers working
+in quantitative finance, as well as candidates preparing for quant research
+or trading roles. It may also help engineers who want to understand how
+serious research pipelines are structured beyond static backtests.
 
 
-## How to Review This Project (Recommended)
+
+## How to Review This Project 
 
 If you are short on time:
 
@@ -63,99 +66,67 @@ If you are short on time:
 3. Check `portfolio_comparison.csv`
 4. Read the Diagnostics section
 
-This gives a complete picture in under 10 minutes.
+This gives a complete picture in a few minutes.
 
 
-## Why This Project Matters
+## Design Choices (and Trade-offs)
 
-This project intentionally prioritizes:
-- robustness over curve-fitting
-- interpretability over opaque optimization
-- failure analysis over headline metrics
+Several design decisions were made deliberately, even though they reduced
+headline performance. Walk-forward evaluation is used instead of static
+splits to better reflect real deployment. Volatility regimes are rule-based
+and observable, which avoids black-box behavior but reacts more slowly to
+sudden shifts.
 
-These priorities come with trade-offs, and the results reflect that.
+Risk controls operate at the portfolio level rather than as a final filter,
+and diagnostics are treated as core outputs rather than optional analysis.
+Some of these choices make results look worse on paper, but they make the
+system easier to reason about and debug.
 
-
-
-
-## What Makes This Project Different
-
-- Fully automated end-to-end pipeline (one command)
-- Rolling walk-forward evaluation (no look-ahead bias)
-- Explicit regime-aware logic (not hidden ML)
-- Portfolio-level risk controls (VaR, ES, stress tests)
-- Diagnostics-first mindset (failure analysis, not just returns)
-
-
-## How This Project Should Be Read
-
-This repository is not meant to be skimmed like a typical trading strategy.
-
-It is structured to show **how decisions are made**, not just what the final metrics are.
-
-If you are reviewing this as:
-- a researcher → focus on walk-forward logic and diagnostics
-- an interviewer → focus on design decisions and failure analysis
-- an engineer → focus on modularity and reproducibility
-
-The results matter, but understanding *why they look the way they do*
-matters more.
-
-
-## Key Design Decisions
-
-Some deliberate choices shaped this system:
-
-- Walk-forward evaluation is used instead of static splits to reflect how models are deployed in practice.
-- Regime logic is rule-based and observable, avoiding opaque decision boundaries.
-- Risk controls operate at the portfolio level, not as post-processing filters.
-- Diagnostics are treated as first-class outputs, not optional analysis.
-
-These decisions trade raw performance for interpretability and robustness.
+I’m aware these decisions hurt some metrics. That’s a trade-off I was
+comfortable making, and I’d still make the same calls if I rebuilt this.
 
 
 ## Technical Overview
 
-### 1. What this project is about (in simple words)
-The entire research pipeline is fully automated and reproducible.
+### 1. What the System Does (Plain Language)
 
-Instead of focusing on “high returns”, the goal is to build a system that is:
+The pipeline is fully automated and reproducible.
+The goal was not to maximize returns, but to study behavior.
 
-- statistically sound  
-- free from look-ahead bias  
-- robust across market regimes  
-- transparent and diagnosable  
+In simple terms, the system focuses on:
+
+- correct out-of-sample testing
+- clear separation between training and evaluation
+- portfolio behavior across different volatility regimes
+- understanding why strategies fail, not just when they work
+ 
 
 
-
-### 2. Key ideas implemented
+### 2. Core Ideas
 
 #### Volatility modeling
-- GARCH, GJR-GARCH, EGARCH, FIGARCH
+GARCH-family models (GARCH, GJR-GARCH, EGARCH, FIGARCH) are used only to
+estimate conditional volatility. They are not used to predict returns.
 
-#### Research discipline
-- Rolling walk-forward re-fitting  
-- Dynamic model selection  
-- Strict train → test separation  
-- No data leakage  
+#### Evaluation discipline
+Models are re-fit in a rolling walk-forward setup. Avoiding look-ahead bias
+was treated as a hard constraint, even when it reduced performance.
 
 #### Strategy logic
-- Volatility targeting  
-- Volatility regime detection (LOW / MEDIUM / HIGH)  
-- Risk-adjusted signal: Expected Return ÷ Forecasted Volatility  
+Signals combine expected returns with forecasted volatility. Position sizes
+are controlled via volatility targeting, and market conditions are grouped
+into LOW, MEDIUM, and HIGH volatility regimes.
 
-#### Portfolio & risk
-- Inverse-volatility weighted portfolios  
-- Regime-aware portfolio allocation  
-- Portfolio-level VaR & Expected Shortfall constraints  
-- Stress testing (COVID-19, rate-hike regimes)  
-- Capital allocation checks  
+#### Portfolio and risk
+Assets are weighted by inverse volatility. A regime-aware allocator scales
+exposure during high-risk periods. Risk is monitored using VaR, Expected
+Shortfall, and historical stress episodes such as COVID-19 and rate-hike
+phases.
 
 #### Diagnostics
-- Regime-wise performance attribution  
-- Risk allocator behavior analysis  
-- Crisis-specific drawdown analysis  
-- Visual equity curves for interpretation  
+Instead of relying on a single Sharpe ratio, the system produces diagnostics
+that show when the strategy struggles, when risk controls activate, and how
+drawdowns evolve.
 
 
 ### 3. Project structure (clean & modular)
@@ -181,106 +152,34 @@ quant-volatility-risk-engine/
 └── README.md
 ```
 
----
 
-### 4. Environment setup (macOS example)
-This section shows a macOS/Homebrew setup.  
-Other platforms can use any Python 3.11 installation.
+### 4. Outputs
 
-#### Step 1: Install Python (macOS / Linux)
+All results are saved under `outputs/`.
 
-```bash
-brew install python@3.11
-/opt/homebrew/bin/python3.11 --version
-```
+- `outputs/final/` contains CSV summaries and diagnostics
+- `outputs/charts/` contains equity curves, regime plots, and crisis charts
 
-Expected:
-```
-Python 3.11.x
-```
+Key plots include walk-forward equity, baseline vs regime-aware portfolios,
+volatility regime distributions, and crisis-period performance.
 
 
-#### Step 2: Create virtual environment
+### 5. Results and Limitations
 
-```bash
-/opt/homebrew/bin/python3.11 -m venv venv
-source venv/bin/activate
-```
+The results are intentionally conservative. As constraints become stricter,
+performance drops — which is expected and, in this context, acceptable.
 
-> Always use a fresh virtual environment.
+Regime awareness mainly reduces downside risk rather than improving Sharpe
+ratios. During calm markets, the regime-aware portfolio often underperforms
+the baseline. During volatile periods, drawdowns are better controlled.
 
+Limitations worth noting:
 
+- regime detection is rule-based and reacts with some delay
+- transaction costs are not modeled
+- risk controls are defensive and do not aim to maximize upside
 
-#### Step 3: Install dependencies
-
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
----
-
-### 5. One-command execution (FULL PIPELINE)
-
-Once setup is done, **everything runs with one command**:
-
-```bash
-python -m run.run_full_pipeline
-```
-
-This single command executes:
-
-1. Data preprocessing  
-2. Rolling walk-forward modeling  
-3. Walk-forward evaluation + equity plot  
-4. Single-asset strategy backtest  
-5. Baseline portfolio backtest  
-6. Regime-aware portfolio + risk allocator  
-7. Portfolio comparison  
-8. VaR & Expected Shortfall  
-9. Stress testing & capital allocation  
-10. Full diagnostics + plots  
-
-No manual steps. No hidden scripts.
-
----
-### 6. Outputs & Artifacts
-
-All outputs are saved under the `outputs/` directory and represent final
-research results produced by the pipeline.
-
-#### 6.1 Research Tables (CSV)
-
-Location: `outputs/final/`
-
-- walk-forward evaluation metrics  
-- single asset performance results  
-- baseline portfolio metrics  
-- regime-aware portfolio metrics  
-- portfolio comparison results  
-- VaR and Expected Shortfall summaries  
-- stress testing outputs  
-- capital allocation results  
-- additional diagnostic tables (regime and allocator behavior)
-
-Examples:
-- walkforward_metrics.csv
-- portfolio_regime_metrics.csv
-- portfolio_comparison.csv
-
-#### 6.2 Visual Diagnostics (Plots)
-
-Location: `outputs/charts/`
-
-- walk-forward equity curve  
-- single asset equity curve  
-- baseline vs regime-aware portfolio equity  
-- volatility regime distribution  
-- crisis-period equity curves (COVID-19, rate hikes)
-
-
-### 6.3 Visual Results (Key Plots)
-
+These trade-offs were accepted to keep the system interpretable and auditable.
 The following plots are automatically generated by the pipeline and
 summarize the behavior of the system visually:
 
@@ -304,71 +203,25 @@ summarize the behavior of the system visually:
 ![](outputs/charts/crisis_rate_hikes.png)
 
 
-### 7. Diagnostics philosophy
+### 6. Context
 
-Many quantitative projects stop at reporting Sharpe ratios and moving on.
-
-This project focuses on understanding *behavior* rather than optimizing metrics.
-Diagnostics are used to answer practical research questions:
-
-- When does the strategy underperform?
-- Which volatility regimes contribute most to drawdowns?
-- Does the risk allocator actually activate, and when?
-- How does the system behave during real market crises?
-
-These diagnostics follow standard practices used in professional quantitative research.
-
----
-
-### 8. How Good Are the Results?
-
-The results are reasonable and internally consistent rather than aggressively optimized for in-sample performance.
-Performance naturally decreases as evaluation constraints become stricter, which is consistent with robust out-of-sample testing.
-
-At the portfolio level, regime awareness primarily improves downside
-risk behavior rather than headline Sharpe ratios. In some market
-conditions this leads to lower average returns but more controlled
-exposure during high-volatility regimes.
-
-Overall, the outcomes are believable and reflect realistic performance
-for volatility- and regime-based strategies.
+This project was built as a research prototype.
+It is intended to demonstrate research discipline, reproducibility,
+and risk-aware thinking rather than production-ready trading performance.
 
 
-### 9. Academic & industry level
 
-This project aligns with expectations for:
-
-- **Strong MSc / MTech final project**
-- **Early PhD-level research prototype**
-- **Quant research internship / analyst portfolio**
-
-It is **far above**:
-- Indicator-based trading bots  
-- Static backtests  
-- ML-for-the-sake-of-ML projects  
-
-### 10. Skills Demonstrated
-
-- Time-series modeling and volatility forecasting
-- Walk-forward experimental design
-- Portfolio-level risk measurement (VaR, ES)
-- Diagnostic-driven research evaluation
-- Reproducible research pipelines
-
-
-### 11. Disclaimer
+### 7. Disclaimer
 
 This project documents how I think about quantitative systems under uncertainty:
 explicit assumptions, controlled experimentation, and honest evaluation when
 results are uncomfortable.
 
 
-### 12. Author
+### 8. Author
 
 Designed and implemented end-to-end as a personal quantitative research system.
 
-**Connect with me:**
 - GitHub: https://github.com/sidharth-choudhary786
 - LinkedIn: https://www.linkedin.com/in/sidharth-choudhary786
-- Projects: https://github.com/sidharth-choudhary786?tab=repositories
 
