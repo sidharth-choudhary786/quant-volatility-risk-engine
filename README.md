@@ -320,15 +320,15 @@ These diagnostics follow standard practices used in professional quantitative re
 
 ---
 
-### 8. How Good Are the Results? (Honest Assessment)
+### 8. How Good Are the Results?
 
 The results are reasonable and internally consistent rather than aggressively optimized for in-sample performance.
 Performance naturally decreases as evaluation constraints become stricter, which is consistent with robust out-of-sample testing.
 
-At the portfolio level, adding regime awareness improves overall
-risk-adjusted behavior, mainly by reducing drawdowns during high
-volatility periods. Risk is managed, but not removed, which aligns with
-how real trading systems behave.
+At the portfolio level, regime awareness primarily improves downside
+risk behavior rather than headline Sharpe ratios. In some market
+conditions this leads to lower average returns but more controlled
+exposure during high-volatility regimes.
 
 Overall, the outcomes are believable and reflect realistic performance
 for volatility- and regime-based strategies.
