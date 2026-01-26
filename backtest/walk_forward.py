@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 
 # -------------------------------------------------
 # WALK-FORWARD OUT-OF-SAMPLE BACKTEST
-# (Logic EXACTLY SAME as your Code 22)
 # -------------------------------------------------
 
 def run_walk_forward_backtest(
@@ -19,7 +18,6 @@ def run_walk_forward_backtest(
 
     data = df.copy()
 
-    # Ensure Date is datetime
     data["Date"] = pd.to_datetime(data["Date"])
     data["Year"] = data["Date"].dt.year
 
@@ -42,7 +40,7 @@ def run_walk_forward_backtest(
             (data["Year"] <= train_end)
         ].copy()
 
-        # Testing data (OUT-OF-SAMPLE)
+        # Testing data
         test_df = data[data["Year"] == test_year].copy()
 
         # Safety checks
@@ -50,7 +48,7 @@ def run_walk_forward_backtest(
             continue
 
         # -----------------------------------
-        # STRATEGY RULES (UNCHANGED)
+        # STRATEGY RULES
         # -----------------------------------
         test_df["Signal"] = np.where(
             (test_df["Price"] > test_df["MA_Price"]) &
@@ -89,9 +87,9 @@ def run_walk_forward_backtest(
     return pd.DataFrame(walkforward_results)
 
 
-# -------------------------------------------------
-# OPTIONAL: PLOT FUNCTION
-# -------------------------------------------------
+# ---------------
+# PLOT FUNCTION
+# ---------------
 
 def plot_walk_forward_sharpe(walkforward_df):
     """
