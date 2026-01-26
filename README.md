@@ -2,9 +2,7 @@
 
 **Tech Stack:** Python 3.11  
 **Domain:** Quantitative Finance  
-**Status:** Research Complete  
 
-🔗 Python: https://www.python.org  
 🔗 Project Repo: https://github.com/sidharth-choudhary786/quant-volatility-risk-engine
 
 
