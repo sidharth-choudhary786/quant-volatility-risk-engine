@@ -29,7 +29,7 @@ def evaluate_walkforward(df, save_path="outputs/final/walkforward_metrics.csv"):
     # 2️⃣ Equity (normalized)
     # -----------------------------
     equity = (1 + returns).cumprod()
-    equity = equity / equity.iloc[0]   # 🔥 normalization
+    equity = equity / equity.iloc[0]   #  normalization
 
     # -----------------------------
     # 3️⃣ Metrics
@@ -63,7 +63,7 @@ def evaluate_walkforward(df, save_path="outputs/final/walkforward_metrics.csv"):
         index=False
     )
 
-    print(f"✅ Walk-forward metrics saved → {save_path}")
+    print(f"----- Walk-forward metrics saved → {save_path}")
 
     return metrics
 
