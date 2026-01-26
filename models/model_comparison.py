@@ -69,15 +69,15 @@ compare_df["Best_Model_BIC"] = compare_df["Best_Model_BIC"].str.replace("BIC_", 
 
 compare_df.to_csv(OUTPUT_PATH, index=False)
 
-print("\n✅ Model comparison completed")
-print(f"📄 Output saved to: {OUTPUT_PATH}")
+print("\n Model comparison completed")
+print(f" Output saved to: {OUTPUT_PATH}")
 
 # --------------------------------------------------
 # QUICK SUMMARY
 # --------------------------------------------------
 
-print("\n📊 Best model count (AIC-based):")
+print("\n Best model count (AIC-based):")
 print(compare_df["Best_Model"].value_counts())
 
-print("\n📊 Best model count (BIC-based):")
+print("\n Best model count (BIC-based):")
 print(compare_df["Best_Model_BIC"].value_counts())
