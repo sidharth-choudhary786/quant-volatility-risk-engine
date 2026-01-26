@@ -11,7 +11,7 @@ from scripts.preprocess import load_returns_data
 from diagnostics.crisis_analysis import plot_crisis_equity
 
 def main():
-    print("\n🚦 RUNNING FULL DIAGNOSTICS SUITE\n")
+    print("\n RUNNING FULL DIAGNOSTICS SUITE\n")
 
     # -----------------------------------
     # Load data & run base backtest
@@ -37,7 +37,7 @@ def main():
     # -----------------------------------
     # Diagnostic 1: Regime Performance
     # -----------------------------------
-    print("📊 Diagnostic–1: Regime-wise Performance\n")
+    print(" Diagnostic–1: Regime-wise Performance\n")
 
     regime_df = regime_performance(backtest_df)
     print(regime_df)
@@ -54,7 +54,7 @@ def main():
     # -----------------------------------
     # Diagnostic 2: Risk Allocator Stats
     # -----------------------------------
-    print("\n🛡️ Diagnostic–2: Risk Allocator Behavior\n")
+    print("\n Diagnostic–2: Risk Allocator Behavior\n")
 
     allocator_df = pd.read_csv(
         "outputs/final/portfolio_regime_risk_allocator.csv"
@@ -74,7 +74,7 @@ def main():
     # -----------------------------------
     # Diagnostic 3: Crisis Windows
     # -----------------------------------
-    print("\n💥 Diagnostic–3: Crisis Stress Test\n")
+    print("\n Diagnostic–3: Crisis Stress Test\n")
 
     crises = [
         ("COVID-19", "2020-02-01", "2020-05-01"),
@@ -102,8 +102,8 @@ def main():
         index=False
     )
 
-    print("\n✅ ALL DIAGNOSTICS COMPLETED SUCCESSFULLY")
-    print("📂 Results saved in: outputs/final/\n")
+    print("\n ALL DIAGNOSTICS COMPLETED SUCCESSFULLY")
+    print(" Results saved in: outputs/final/\n")
 
 
 if __name__ == "__main__":
