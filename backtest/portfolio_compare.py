@@ -34,13 +34,13 @@ def compare_portfolios():
         f"{base_path}/portfolio_comparison.csv"
     )
 
-    print("\n📊 PORTFOLIO COMPARISON\n")
+    print("\n PORTFOLIO COMPARISON\n")
     print(pivot)
 
     print(
-        "\n✅ Comparison saved → outputs/final/portfolio_comparison.csv"
+        "\n Comparison saved → outputs/final/portfolio_comparison.csv"
     )
-        # -----------------------------
+    # -----------------------------
     # LOAD EQUITY DATA FOR PLOT
     # -----------------------------
     baseline_equity = pd.read_csv(
@@ -94,7 +94,7 @@ def plot_portfolio_equity_comparison(baseline_df, regime_df):
     )
     plt.close()
 
-    print("📈 Portfolio equity comparison plot saved → outputs/charts/portfolio_equity_comparison.png")
+    print(" Portfolio equity comparison plot saved → outputs/charts/portfolio_equity_comparison.png")
 
 if __name__ == "__main__":
     compare_portfolios()
