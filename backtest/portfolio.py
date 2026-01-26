@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import os
 
-# 🔥 ADD THIS IMPORT
 from risk_allocator.apply_allocator import apply_risk_allocator
 
 
@@ -61,7 +60,7 @@ def run_portfolio_backtest(returns_df, portfolio_stocks):
     portfolio_df["Portfolio_Return"] = (weights * portfolio_df).sum(axis=1)
 
     # -----------------------------------
-    # 🔥 RISK-CONSTRAINED ALLOCATION (NEW)
+    # RISK-CONSTRAINED ALLOCATION (NEW)
     # -----------------------------------
     portfolio_df, risk_summary = apply_risk_allocator(
         portfolio_df,
@@ -204,11 +203,11 @@ if __name__ == "__main__":
         index=False
     )
 
-    print("✅ Baseline portfolio saved → outputs/final/portfolio_performance.csv")
+    print("----- Baseline portfolio saved → outputs/final/portfolio_performance.csv -----")
 
 
 
-        # -----------------------------------
+    # -----------------------------------
     # SAVE BASELINE PORTFOLIO EQUITY (FOR PLOTS)
     # -----------------------------------
     portfolio_df[[
