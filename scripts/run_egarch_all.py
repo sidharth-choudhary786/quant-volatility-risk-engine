@@ -19,7 +19,7 @@ returns_df = pd.read_csv(RETURNS_PATH)
 tickers = sorted(returns_df["Ticker"].unique())
 
 # --------------------------------------------------
-# EGARCH FUNCTION (SAME LOGIC AS YOUR CODE)
+# EGARCH FUNCTION
 # --------------------------------------------------
 
 def fit_egarch(series):
@@ -65,7 +65,7 @@ for ticker in tqdm(tickers):
             "omega": omega,
             "alpha": alpha,
             "beta": beta,
-            "gamma": gamma,              # 🔥 FEAR / ASYMMETRY
+            "gamma": gamma,              # FEAR / ASYMMETRY
             "persistence": persistence,
             "AIC": result.aic,
             "BIC": result.bic
@@ -73,7 +73,7 @@ for ticker in tqdm(tickers):
 
     except Exception as e:
         failed.append(ticker)
-        print(f"❌ Failed for {ticker}: {e}")
+        print(f"------ Failed for {ticker}: {e}")
 
 # --------------------------------------------------
 # SAVE OUTPUT
@@ -83,11 +83,11 @@ results_df = pd.DataFrame(results)
 
 results_df.to_csv(OUTPUT_PATH, index=False)
 
-print("\n✅ EGARCH batch run completed")
-print(f"📄 Output saved to: {OUTPUT_PATH}")
+print("\n EGARCH batch run completed")
+print(f" Output saved to: {OUTPUT_PATH}")
 
 if failed:
-    print("\n⚠️ Failed stocks:")
+    print("\n Failed stocks:")
     print(failed)
 else:
-    print("\n🎉 All stocks processed successfully")
+    print("\n All stocks processed successfully")
