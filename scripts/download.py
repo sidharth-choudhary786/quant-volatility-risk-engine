@@ -44,17 +44,13 @@ missing_adj_tickers = []
 # We'll iterate in the order provided so combined CSV has blocks in that order.
 for ticker in tqdm(tickers, desc="Tickers"):
     try:
-        # Use yf.Ticker.history which typically returns columns:
-        # Index Date, Open, High, Low, Close, Volume, Dividends, Stock Splits, Adj Close
         tk = yf.Ticker(ticker)
-        df = tk.history(start=start_date, end=end_date, auto_adjust=False)  # keep both Close and Adj Close
-        # Alternative: yf.download(ticker, start=start_date, end=end_date)
+        df = tk.history(start=start_date, end=end_date, auto_adjust=False)
 
         if df is None or df.empty:
             print(f"Warning: {ticker} returned no data. Skipping.")
             continue
 
-        # Ensure expected column names and index
         df = df.copy()
         if isinstance(df.index, pd.DatetimeIndex):
             df.index.name = "Date"
@@ -66,8 +62,6 @@ for ticker in tqdm(tickers, desc="Tickers"):
         # Columns that we want in final CSV
         cols_required = ["Open", "High", "Low", "Close", "Adj Close", "Volume"]
 
-        # If 'Adj Close' missing, attempt to get it. yfinance normally supplies it;
-        # fallback: set Adj Close = Close and record ticker for user to inspect.
         if "Adj Close" not in df.columns:
             df["Adj Close"] = df["Close"]
             missing_adj_tickers.append(ticker)
@@ -78,7 +72,7 @@ for ticker in tqdm(tickers, desc="Tickers"):
         df_out.reset_index(inplace=True)
         df_out["Ticker"] = ticker
 
-        # Save per-ticker CSV (filename safe)
+        # Save per-ticker CSV 
         per_file = os.path.join(per_ticker_dir, f"{safe_filename(ticker)}.csv")
         df_out.to_csv(per_file, index=False)
 
@@ -92,7 +86,7 @@ for ticker in tqdm(tickers, desc="Tickers"):
 # Concatenate all DataFrames in the order appended
 if combined_rows:
     combined_df = pd.concat(combined_rows, ignore_index=True, sort=False)
-    # Optional: ensure column order
+    # ensure column order
     col_order = ["Date","Ticker","Open","High","Low","Close","Adj Close","Volume"]
     cols_present = [c for c in col_order if c in combined_df.columns]
     combined_df = combined_df[cols_present]
