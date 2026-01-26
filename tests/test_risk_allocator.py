@@ -36,7 +36,7 @@ def test_risk_allocator_basic():
     assert risk_summary["Portfolio_VaR"] > 0
     assert risk_summary["Portfolio_ES"] > 0
 
-    print("\n✅ Risk allocator test PASSED")
+    print("\n Risk allocator test PASSED")
     print(risk_summary)
 
 
