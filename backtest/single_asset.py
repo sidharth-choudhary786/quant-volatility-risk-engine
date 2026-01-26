@@ -51,7 +51,7 @@ def run_single_asset_backtest(
     vol = vol[-len(backtest_df):]  # strict alignment
     backtest_df["Forecasted_Volatility"] = vol
 
-    # 🔒 Use lagged volatility (NO look-ahead)
+    # Use lagged volatility (NO look-ahead)
     backtest_df["Vol_Lag"] = backtest_df["Forecasted_Volatility"].shift(1)
 
     # Base position sizing
@@ -193,7 +193,7 @@ def plot_equity_curve(backtest_df, stock="INFY.NS"):
     plt.savefig(path, dpi=150)
     plt.close()
 
-    print(f"📈 Equity curve saved → {path}")
+    print(f" Equity curve saved → {path}")
 
 
 # -------------------------------------------------
@@ -224,7 +224,7 @@ if __name__ == "__main__":
         egarch_result,
         stock
     )
-    print("\n🧪 FINAL SANITY CHECK\n")
+    print("\n FINAL SANITY CHECK\n")
 
     print(
         backtest_df[
@@ -240,11 +240,11 @@ if __name__ == "__main__":
     )
 
 
-    print("\n📊 Volatility Regime Distribution\n")
+    print("\n Volatility Regime Distribution\n")
     print(backtest_df["Vol_Regime"].value_counts())
 
     performance = compute_performance_metrics(backtest_df)
-    print("\n📊 PERFORMANCE SUMMARY\n")
+    print("\n PERFORMANCE SUMMARY\n")
     print(performance)
 
     plot_equity_curve(backtest_df, stock)
