@@ -64,4 +64,4 @@ def plot_regime_distribution(backtest_df):
     )
     plt.close()
 
-    print("📊 Regime distribution plot saved → outputs/charts/regime_distribution.png")
+    print(" Regime distribution plot saved → outputs/charts/regime_distribution.png")
