@@ -3,7 +3,7 @@ import numpy as np
 
 def fit_egarch(series):
     """
-    EGARCH(1,1) — SAME as your existing logic
+    EGARCH(1,1) — SAME as existing logic
     """
 
     model = arch_model(
