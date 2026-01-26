@@ -21,7 +21,7 @@ def apply_risk_allocator(
 
     scale, var, es = risk_constrained_scaler(clean_returns)
     # Explicit confidence level for risk metrics
-    ALPHA = 0.99  # 99% confidence (industry standard)
+    ALPHA = 0.99  # 99% confidence
 
     portfolio_df = portfolio_df.copy()
 
