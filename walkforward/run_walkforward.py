@@ -10,7 +10,6 @@ from walkforward.config import (
 
 from walkforward.rolling_windows import generate_rolling_windows
 
-# STEP–3: dynamic model switching
 from model_switching.refit_models import refit_all_models
 from model_switching.selector import select_best_model
 
@@ -79,7 +78,7 @@ def run_walkforward(returns_df):
             continue
 
         # ==================================================
-        # 🔥 STEP–3: REFIT ALL MODELS ON TRAIN WINDOW
+        # STEP–3: REFIT ALL MODELS ON TRAIN WINDOW
         # ==================================================
         model_df = refit_all_models(train_series)
 
@@ -102,7 +101,7 @@ def run_walkforward(returns_df):
         test_df["Selected_Model"] = best_model_name
 
         # -------------------------------
-        # Position sizing (STEP–2 untouched)
+        # Position sizing (STEP–2 )
         # -------------------------------
         test_df["Position_Size"] = (
             TARGET_VOL / test_df["Forecasted_Volatility"]
