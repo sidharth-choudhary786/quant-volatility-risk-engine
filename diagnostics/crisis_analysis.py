@@ -49,4 +49,4 @@ def plot_crisis_equity(backtest_df, start_date, end_date, label):
     plt.savefig(filename, dpi=150)
     plt.close()
 
-    print(f"📉 Crisis equity plot saved → {filename}")
+    print(f" Crisis equity plot saved → {filename}")
