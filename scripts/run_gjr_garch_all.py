@@ -19,7 +19,7 @@ returns_df = pd.read_csv(RETURNS_PATH)
 tickers = sorted(returns_df["Ticker"].unique())
 
 # --------------------------------------------------
-# GJR-GARCH FUNCTION (SAME AS YOUR CODE)
+# GJR-GARCH FUNCTION
 # --------------------------------------------------
 
 def fit_gjr_garch(series):
@@ -66,15 +66,15 @@ for ticker in tqdm(tickers):
             "omega": omega,
             "alpha": alpha,
             "beta": beta,
-            "gamma": gamma,                  # 🔥 crisis fear
-            "persistence": persistence,      # 🔥 crisis memory
+            "gamma": gamma,                  #  crisis fear
+            "persistence": persistence,      #  crisis memory
             "AIC": result.aic,
             "BIC": result.bic
         })
 
     except Exception as e:
         failed.append(ticker)
-        print(f"❌ Failed for {ticker}: {e}")
+        print(f" Failed for {ticker}: {e}")
 
 # --------------------------------------------------
 # SAVE OUTPUT
@@ -84,11 +84,11 @@ results_df = pd.DataFrame(results)
 
 results_df.to_csv(OUTPUT_PATH, index=False)
 
-print("\n✅ GJR-GARCH batch run completed")
-print(f"📄 Output saved to: {OUTPUT_PATH}")
+print("\n GJR-GARCH batch run completed")
+print(f" Output saved to: {OUTPUT_PATH}")
 
 if failed:
-    print("\n⚠️ Failed stocks:")
+    print("\n Failed stocks:")
     print(failed)
 else:
-    print("\n🎉 All stocks processed successfully")
+    print("\n All stocks processed successfully")
