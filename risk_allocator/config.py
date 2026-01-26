@@ -1,4 +1,4 @@
-# Risk limits (institutional style)
+# Risk limits 
 
 CONFIDENCE_LEVEL = 0.95
 TRADING_DAYS = 252
