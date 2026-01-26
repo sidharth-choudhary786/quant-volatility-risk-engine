@@ -223,5 +223,5 @@ if __name__ == "__main__":
         index=False
     )
 
-    print("📈 Baseline portfolio equity saved → outputs/final/portfolio_equity.csv")
+    print("Baseline portfolio equity saved → outputs/final/portfolio_equity.csv")
 
