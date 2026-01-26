@@ -220,6 +220,7 @@ results are uncomfortable.
 
 Designed and implemented end-to-end as a personal quantitative research system.
 
-- GitHub: https://github.com/sidharth-choudhary786
-- LinkedIn: https://www.linkedin.com/in/sidharth-choudhary786
-
+** Email**: jattsidh786@gmail.com  
+** LinkedIn**: [Sidharth Choudhary](https://www.linkedin.com/in/sidharth-choudhary786)  
+** GitHub**: [sidharth-choudhary786](https://github.com/sidharth-choudhary786)  
+** Portfolio**: [All My Projects](https://github.com/sidharth-choudhary786)
