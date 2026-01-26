@@ -22,7 +22,7 @@ def volatility_target_position(
     - Stable risk interpretation
     """
 
-    print("🔥 USING FIXED POSITION SIZING FUNCTION 🔥")
+    print(" USING FIXED POSITION SIZING FUNCTION ")
 
     position_size = target_vol / forecasted_volatility
 
