@@ -1,5 +1,5 @@
 # =========================================================
-# FULL PIPELINE RUNNER (MASTER)
+# FULL PIPELINE RUNNER
 # One command → COMPLETE PROJECT EXECUTION
 # =========================================================
 
@@ -33,7 +33,7 @@ def run_cmd(cmd, title):
     result = subprocess.run(cmd, shell=True)
     if result.returncode != 0:
         raise RuntimeError(f"FAILED: {title}")
-    print(f"✅ DONE: {title}")
+    print(f" DONE: {title}")
 
 # =========================================================
 # PIPELINE START
@@ -41,7 +41,7 @@ def run_cmd(cmd, title):
 
 def main():
 
-    print("\n🚀 STARTING FULL QUANT PIPELINE (ONE COMMAND MODE)\n")
+    print("\n STARTING FULL QUANT PIPELINE (ONE COMMAND MODE)\n")
 
     # -----------------------------------------------------
     # 1️⃣ DATA PREPROCESSING
@@ -128,8 +128,8 @@ def main():
         "Full diagnostics suite"
     )
 
-    print("\n🎉 FULL PIPELINE COMPLETED SUCCESSFULLY")
-    print(f"📂 All results saved in → {OUTPUT_DIR}\n")
+    print("\n FULL PIPELINE COMPLETED SUCCESSFULLY")
+    print(f" All results saved in → {OUTPUT_DIR}\n")
 
 # =========================================================
 # ENTRY POINT
