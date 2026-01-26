@@ -81,7 +81,7 @@ def run_portfolio_regime_backtest(
             w = w / w.sum()
             port_ret = (w * r).sum()
         else:
-            # 🔥 FALLBACK: equal weight
+            # FALLBACK: equal weight
             r = returns_today.dropna()
             if len(r) == 0:
                 continue
@@ -97,7 +97,7 @@ def run_portfolio_regime_backtest(
     ).sort_index()
 
     # ================================
-    # 🔥 RISK-CONSTRAINED ALLOCATOR
+    # RISK-CONSTRAINED ALLOCATOR
     # ================================
     from risk_allocator.apply_allocator import apply_risk_allocator
 
@@ -182,7 +182,7 @@ if __name__ == "__main__":
 
     metrics = portfolio_metrics(port_ret, port_eq)
 
-    print("\n📊 REGIME-AWARE PORTFOLIO PERFORMANCE\n")
+    print("\n REGIME-AWARE PORTFOLIO PERFORMANCE\n")
     for k, v in metrics.items():
         print(f"{k:20s}: {v:.4f}")
 
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         "outputs/final/portfolio_regime_equity.csv"
     )
 
-    print("\n✅ Regime-aware portfolio results saved → outputs/final/")
+    print("\n Regime-aware portfolio results saved → outputs/final/")
 
     # -----------------------------------
     # SAVE METRICS (MISSING PIECE)
@@ -210,7 +210,7 @@ if __name__ == "__main__":
         index=False
     )
 
-    print("📁 Portfolio regime metrics saved → outputs/final/portfolio_regime_metrics.csv")
+    print(" Portfolio regime metrics saved → outputs/final/portfolio_regime_metrics.csv")
 
 
     # -----------------------------------
@@ -226,4 +226,4 @@ if __name__ == "__main__":
         index=False
     )
 
-    print("🛡️ Risk allocator summary saved → outputs/final/portfolio_regime_risk_allocator.csv")
+    print(" Risk allocator summary saved → outputs/final/portfolio_regime_risk_allocator.csv")
