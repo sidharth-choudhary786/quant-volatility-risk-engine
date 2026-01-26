@@ -28,7 +28,6 @@ def compute_es(
 
     # -----------------------------------
     # STEP 2: Align with GARCH volatility
-    # (CRITICAL FIX — no result change)
     # -----------------------------------
     garch_vol = np.asarray(garch_result.conditional_volatility)
 
